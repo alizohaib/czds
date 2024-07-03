@@ -6,9 +6,8 @@ DB_URL="postgresql://postgres:password@db:5432/czds"
 USERNAME="${CZDS_USERNAME}"
 PASSWORD="${CZDS_PASSWORD}"
 
-# Download files
-czds-dl -out $OUT_DIR -username "$USERNAME" -password "$PASSWORD" -verbose -redownload -zone "abc,zero"
-
+# Download files (-zone "abc,xyz")
+czds-dl -out $OUT_DIR -username "$USERNAME" -password "$PASSWORD" -verbose -redownload
 
 parallel --will-cite < /dev/null
 

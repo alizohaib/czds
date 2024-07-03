@@ -24,7 +24,7 @@ DUMP_DIR="/zones"
 mkdir -p $DUMP_DIR
 
 # Fetch the list of tables
-TABLES=$(psql $DB_URL -t -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public';")
+TABLES=$(psql $DB_URL -t -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name NOT LIKE '%_temp';")
 
 echo "$TABLES"
 

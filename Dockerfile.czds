@@ -1,0 +1,25 @@
+# Build stage
+FROM golang:alpine AS czds-build-env
+RUN apk update && apk add --no-cache make git
+
+WORKDIR /go/src/czds
+
+RUN git clone https://github.com/lanrat/czds/ .
+
+RUN go mod download
+RUN make -j $(nproc)
+
+# Runtime stage
+FROM alpine
+RUN apk update && apk add --no-cache tzdata ca-certificates bash curl postgresql-client gzip parallel
+COPY --from=czds-build-env /go/src/czds/bin/* /usr/local/bin/
+COPY to_database.sh /to_database.sh
+RUN chmod +x /to_database.sh
+
+COPY from_database.sh /from_database.sh
+RUN chmod +x /from_database.sh
+
+COPY crons /etc/crontabs/root
+
+# start crond with log level 8 in foreground, output to stderr
+CMD ["crond", "-f", "-d", "8"]

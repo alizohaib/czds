@@ -1,0 +1,23 @@
+services:
+  czds:
+    build:
+      context: .
+      dockerfile: Dockerfile.czds
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/czds
+      - CZDS_USERNAME=usernamehere
+      - CZDS_PASSWORD=putpasswordhere
+    volumes:
+      - ./zones:/zones
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: czds
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+

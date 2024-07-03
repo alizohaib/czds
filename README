@@ -1,0 +1,64 @@
+```markdown
+# CZDS Docker Compose Setup
+
+This repository contains a Docker Compose setup for running a CZDS (Centralized Zone Data Service) application that downloads the latest zonefiles alongside a PostgreSQL database.
+
+## Overview
+
+The `docker-compose.yml` file defines two services:
+
+- `czds`: The application service, which is built from a Dockerfile named `Dockerfile.czds`. It depends on the `db` service and is configured with necessary environment variables for database access and application credentials.
+- `db`: A PostgreSQL database service, using the official `postgres:13` image. It is configured with a default user, password, and database name, and stores data in a volume for persistence.
+
+## Prerequisites
+
+- Docker
+- Docker Compose
+
+Ensure Docker and Docker Compose are installed and running on your system.
+
+## Getting Started
+
+1. **Clone the Repository**
+
+   Clone this repository to your local machine using:
+
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. **Build and Run Services**
+
+   Navigate to the cloned repository directory and run the following command to build and start the services:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   This command builds the `czds` service using the specified Dockerfile and starts both the `czds` and `db` services.
+
+3. **Accessing the Application**
+
+   Once the services are up and running, the CZDS application will be accessible. Refer to the application's documentation for details on accessing and using it.
+   ```bash
+    docker exec -it czd-czds-1  bash
+   ```
+   -------
+   ```
+   docker exec -it czd-db-1 psql -U postgres -d czds
+   ```
+
+4. **Stopping Services**
+
+   To stop the running services, use the following command:
+
+   ```bash
+   docker-compose down --rmi all
+   ```
+
+## Configuration
+
+- **Environment Variables**: The `czds` service requires certain environment variables to be set for database access and authentication. These can be modified in the `docker-compose.yml` file.
+- **Volumes**: Data persistence is managed through Docker volumes. The `db` service stores its data in `./db-data`, and the `czds` service stores its data in `./zones`. These paths can be adjusted as needed.
+
+```

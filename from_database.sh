@@ -35,7 +35,7 @@ dump_and_compress_table() {
     local gz_file_path="${file_path}.gz"
 
     echo "Dumping table $table_name to $file_path"
-    psql $DB_URL -c "\COPY $table_name TO STDOUT WITH (FORMAT text, DELIMITER ',', HEADER false);" | gzip > "$file_path.gz"
+    psql $DB_URL -c "\COPY $table_name TO STDOUT WITH (FORMAT text, DELIMITER ',', HEADER false);" | gzip -f > "$file_path.gz"
 
     echo "Compressed $file_path to $gz_file_path"
 }

@@ -1,4 +1,3 @@
-```markdown
 # CZDS Docker Compose Setup
 
 This repository contains a Docker Compose setup for running a CZDS (Centralized Zone Data Service) application that downloads the latest zonefiles alongside a PostgreSQL database.

@@ -11,7 +11,7 @@ RUN make -j $(nproc)
 
 # Runtime stage
 FROM alpine
-RUN apk update && apk add --no-cache tzdata ca-certificates bash curl postgresql-client gzip parallel
+RUN apk update && apk add --no-cache tzdata ca-certificates bash curl postgresql-client gzip parallel nano
 COPY --from=czds-build-env /go/src/czds/bin/* /usr/local/bin/
 COPY to_database.sh /to_database.sh
 RUN chmod +x /to_database.sh
